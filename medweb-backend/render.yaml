@@ -1,0 +1,53 @@
+services:
+  - type: web
+    name: medweb-backend
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: medweb-db
+          property: host
+      - key: DATABASE_PORT
+        fromDatabase:
+          name: medweb-db
+          property: port
+      - key: DATABASE_USERNAME
+        fromDatabase:
+          name: medweb-db
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: medweb-db
+          property: password
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: medweb-db
+          property: database
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION
+        value: 7d
+      - key: REDIS_HOST
+        fromService:
+          type: redis
+          name: medweb-redis
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          type: redis
+          name: medweb-redis
+          property: port
+
+databases:
+  - name: medweb-db
+    databaseName: medweb
+    user: medweb_user
+
+  - name: medweb-redis
+    type: redis
