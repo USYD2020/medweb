@@ -160,7 +160,8 @@ export default function StepForm({
 
     const autoSaveInterval = setInterval(async () => {
       setIsSaving(true);
-      const data = getValues();
+      // 使用 watch() 获取最新的所有表单值，确保包含所有字段
+      const data = watch();
       await onSave(data);
       setLastSaved(new Date());
       setIsSaving(false);
@@ -169,7 +170,7 @@ export default function StepForm({
     }, 30000); // 30秒
 
     return () => clearInterval(autoSaveInterval);
-  }, [onSave, getValues]);
+  }, [onSave, watch]);
 
   // 键盘快捷键支持
   useEffect(() => {

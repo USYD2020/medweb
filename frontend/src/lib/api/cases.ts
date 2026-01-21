@@ -23,14 +23,17 @@ export const casesApi = {
     return response.data;
   },
 
-  // 保存草稿
+  // 保存草稿 - 使用 PUT /cases/${id} 并发送 answers 字段
   saveDraft: async (id: string, data: FormData): Promise<void> => {
-    await apiClient.put(`/cases/${id}/draft`, { formData: data });
+    await apiClient.put(`/cases/${id}`, { answers: data });
   },
 
-  // 提交表单
+  // 提交表单 - 使用 POST /cases/${id}/submit 并先保存数据
   submit: async (id: string, data: FormData): Promise<void> => {
-    await apiClient.put(`/cases/${id}/submit`, { formData: data });
+    // 先保存数据
+    await apiClient.put(`/cases/${id}`, { answers: data });
+    // 再提交
+    await apiClient.post(`/cases/${id}/submit`);
   },
 
   // 获取病例详情
