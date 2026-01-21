@@ -71,7 +71,7 @@ class MockStorage {
   }
 
   // === 用户操作 ===
-  getUsers(): MockUser[] | null {
+  getUsers(): MockUser[] {
     const data = localStorage.getItem(STORAGE_KEYS.USERS);
     return data ? JSON.parse(data) : null;
   }
