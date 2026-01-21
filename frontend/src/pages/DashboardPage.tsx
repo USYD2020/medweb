@@ -44,8 +44,6 @@ export default function DashboardPage() {
         await casesApi.delete(id);
         // 从列表中移除已删除的项
         setCases(cases.filter(c => c.id !== id));
-        // 显示成功提示
-        alert('草稿已删除');
       } catch (err: any) {
         console.error('删除失败:', err);
         const errorMsg = err.response?.data?.message || err.message || '未知错误';

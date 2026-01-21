@@ -155,6 +155,9 @@ export class CasesService {
       throw new BadRequestException('只有草稿状态的病例可以删除');
     }
 
+    // 先删除关联的答案记录
+    await this.answerRepository.delete({ caseId: id });
+    // 再删除病例记录
     await this.caseRepository.delete(id);
   }
 
