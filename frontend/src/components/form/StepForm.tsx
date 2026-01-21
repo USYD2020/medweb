@@ -15,7 +15,7 @@ import TextareaField from './fields/TextareaField';
 interface StepFormProps {
   schema: FormSchema;
   initialData?: FormData;
-  onSave?: (data: FormData) => void;
+  onSave?: (data: FormData) => Promise<void> | void;
   onSubmit: (data: FormData) => void;
 }
 
@@ -59,7 +59,6 @@ export default function StepForm({
     setValue,
     formState: { errors },
     getValues,
-    trigger,
   } = useForm({
     defaultValues: { ...getDefaultValues(), ...initialData },
     mode: 'onChange',
@@ -181,7 +180,7 @@ export default function StepForm({
         if (onSave && !isSaving) {
           setIsSaving(true);
           const data = getValues();
-          onSave(data).then(() => {
+          Promise.resolve(onSave(data)).then(() => {
             setLastSaved(new Date());
             setIsSaving(false);
             setShowSaveSuccess(true);

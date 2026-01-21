@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StepForm from '@/components/form/StepForm';
 import { crfSchema } from '@/data/crf-schema';
@@ -8,10 +8,8 @@ import type { FormData } from '@/types/form';
 export default function NewCasePage() {
   const navigate = useNavigate();
   const [caseId, setCaseId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false); // 改为 false，不需要在加载时创建病例
   const [error, setError] = useState('');
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [hasStartedTyping, setHasStartedTyping] = useState(false);
 
   // 不在页面加载时创建病例，改为在用户开始填写时创建
 
@@ -47,7 +45,7 @@ export default function NewCasePage() {
     }
 
     try {
-      await casesApi.saveDraft(caseId, data);
+      await casesApi.saveDraft(caseId!, data);
       console.log('草稿已保存');
     } catch (err: any) {
       console.error('保存草稿失败:', err);
@@ -71,7 +69,7 @@ export default function NewCasePage() {
     }
 
     try {
-      await casesApi.submit(caseId, data);
+      await casesApi.submit(caseId!, data);
       setSubmitSuccess(true);
     } catch (err: any) {
       const errorMsg = err.response?.data?.message || err.message || '提交失败，请重试';

@@ -49,6 +49,7 @@ export interface FormField {
   helpText?: string; // 字段帮助提示
   visibleWhen?: ConditionalLogic; // 字段级别的条件显示
   allowCustom?: boolean; // 用于 select 字段，允许自定义输入
+  defaultValue?: any; // 字段默认值
 }
 
 // 字段分组
@@ -98,7 +99,7 @@ export interface CaseData {
   id: string;
   userId: string;
   status: CaseStatus;
-  formData: FormData;
+  answers: FormData;
   createdAt: string;
   updatedAt: string;
   submittedAt?: string;

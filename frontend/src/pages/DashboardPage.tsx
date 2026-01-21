@@ -18,8 +18,7 @@ export default function DashboardPage() {
   const loadCases = async () => {
     try {
       const response = await casesApi.getList();
-      // 后端返回的是 { items, total, page, limit, totalPages }
-      setCases(Array.isArray(response) ? response : response.items || []);
+      setCases(response);
     } catch (err) {
       console.error('加载病例失败:', err);
     } finally {
@@ -198,7 +197,7 @@ export default function DashboardPage() {
                           继续填写
                         </button>
                         <button
-                          onClick={() => handleDelete(caseItem.id)}
+                          onClick={() => handleDelete(caseItem.id, caseItem.patientHospitalId || '此病例')}
                           disabled={deletingId === caseItem.id}
                           className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                         >

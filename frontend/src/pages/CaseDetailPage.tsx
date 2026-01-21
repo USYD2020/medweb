@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { casesApi } from '@/lib/api/cases';
-import type { FormData } from '@/types/form';
 import { crfSchema } from '@/data/crf-schema';
 
 export default function CaseDetailPage() {
@@ -178,7 +177,7 @@ export default function CaseDetailPage() {
       </div>
 
       {/* 表单内容 */}
-      {crfSchema.modules.map((module, moduleIndex) => (
+      {crfSchema.modules.map((module) => (
         <div key={module.id} className="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 className="text-xl font-bold mb-4">{module.title}</h2>
           {module.description && (

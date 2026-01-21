@@ -44,8 +44,8 @@ export const casesApi = {
 
   // 获取病例列表
   getList: async (): Promise<CaseListItem[]> => {
-    const response = await apiClient.get('/cases');
-    return response.data;
+    const response = await apiClient.get<{ items: CaseListItem[] }>('/cases');
+    return response.data.items;
   },
 
   // 删除病例
